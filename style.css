@@ -1,41 +1,41 @@
-/* --- Global & Theme Setup --- */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* REPLACE the old body rule with this new one in your style.css */
+
 
 body {
     font-family: 'Orbitron', sans-serif;
     height: 100vh;
     color: #fff;
 
-    /* --- Add your custom background image here --- */
-    background-image: url('image.png'); /* <-- Change this to YOUR image file name */
-    background-size: cover; /* Ensures the image covers the whole screen */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents tiling */
+ 
+    background-image: url('image.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
 
-    /* Optional: Add a subtle overlay to make the text and stars stand out */
-    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
-    background-blend-mode: darken; /* Blends the overlay with the image */
+   
+    background-color: rgba(0, 0, 0, 0.4); 
+    background-blend-mode: darken; 
 
-    /* Center the converter */
+   
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Important for star animation */
+    overflow: hidden; 
 }
 /* --- Starfield Background --- */
 .night-sky {
-    position: fixed; /* Keep it in the background */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Place it behind all other content */
+    z-index: -1; 
 }
 
 .star {
@@ -70,21 +70,21 @@ body {
 
 /* --- Currency Converter Styles --- */
 .container {
-    background: rgba(15, 12, 41, 0.7); /* Deep space blue background */
+    background: rgba(15, 12, 41, 0.7);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
     width: 90%;
     max-width: 450px;
-    border: 1px solid rgba(138, 43, 226, 0.5); /* Blue-violet border */
-    box-shadow: 0 0 30px rgba(75, 0, 130, 0.7); /* Indigo glow */
+    border: 1px solid rgba(138, 43, 226, 0.5); 
+    box-shadow: 0 0 30px rgba(75, 0, 130, 0.7);
     backdrop-filter: blur(8px);
 }
 
 h1 {
     margin-bottom: 20px;
     font-size: 32px;
-    color: #c0c0ff; /* Light lavender color */
+    color: #c0c0ff; 
     text-shadow: 0 0 10px #8a2be2;
 }
 
@@ -113,7 +113,7 @@ select {
 
 button {
     font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(to right, #8e2de2, #4a00e0); /* Purple gradient */
+    background: linear-gradient(to right, #8e2de2, #4a00e0); 
     border: none;
     padding: 12px 24px;
     color: white;
@@ -133,8 +133,8 @@ button:hover {
     margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
-    color: #9f8dff; /* Light purple result text */
-    min-height: 24px; /* Prevent layout shift */
+    color: #9f8dff;
+    min-height: 24px; 
 }
 
 /* Marquee Ticker Style */
@@ -151,24 +151,24 @@ button:hover {
     border-radius: 8px;
     border: 1px solid #00ffcc;
 }
-/* For WebKit browsers like Chrome, Safari, and Edge */
+/* For WebKit */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Add this to your style.css file */
+
 
 .loader {
-    border: 4px solid rgba(255, 255, 255, 0.3); /* Light grey border */
-    border-top: 4px solid #9f8dff; /* The spinning part color */
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #9f8dff; 
     border-radius: 50%;
     width: 24px;
     height: 24px;
     animation: spin 1s linear infinite;
-    margin: 0 auto; /* Center the spinner */
-    display: none; /* Hidden by default */
+    margin: 0 auto; 
+    display: none; 
 }
 
 @keyframes spin {
