@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const convertBtn = document.getElementById("convertBtn");
     const resultDiv = document.querySelector(".result");
     const marquee = document.getElementById("rate-marquee");
-    const loader = document.getElementById("loader"); // Get the loader element
+    const loader = document.getElementById("loader"); 
 
     convertBtn.addEventListener("click", () => {
         const from = fromCurrency.value;
@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Start Loading Indicator ---
-        resultDiv.innerText = ""; // Clear previous result
-        loader.style.display = "block"; // Show the spinner
-        convertBtn.disabled = true; // Disable button to prevent multiple clicks
+        resultDiv.innerText = ""; 
+        loader.style.display = "block"; 
+        convertBtn.disabled = true; 
         // --- End Loading Indicator ---
 
         const url = `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`;
@@ -42,11 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultDiv.innerText = "Live conversion failed. Try again.";
             })
             .finally(() => {
-                // --- Hide Loading Indicator ---
-                // This block runs whether the fetch succeeded or failed
-                loader.style.display = "none"; // Hide the spinner
-                convertBtn.disabled = false; // Re-enable the button
-                // --- End Hide Loading Indicator ---
+             
+                loader.style.display = "none"; 
+                convertBtn.disabled = false; 
+              
             });
     });
 
@@ -70,9 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
     
-    updateMarqueeRates(); // Call it once on load
+    updateMarqueeRates(); 
 
-    // --- Falling Stars Logic ---
+    // --- Stars Logic ---
     const nightSky = document.getElementById('night-sky');
     const starCount = 50;
 
