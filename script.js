@@ -30,14 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
         convertBtn.disabled = true; 
         // --- End Loading Indicator ---
 
-        // Directly call the Frankfurter API without the proxy
-        const url = `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`;
+        // Using ExchangeRate-API (No CORS issues, 100% free, no key needed)
+        const url = `https://open.er-api.com/v6/latest/${from}`;
 
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
-                const converted = data.rates[to];
-                resultDiv.innerText = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+                if (data.result === "success") {
+                    // Get the conversion rate and multiply it by the user's amount
+                    const rate = data.rates[to];
+                    const converted = amount * rate;
+                    resultDiv.innerText = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+                } else {
+                    resultDiv.innerText = "Error fetching rates. Try again.";
+                }
             })
             .catch(() => {
                 resultDiv.innerText = "Live conversion failed. Try again.";
@@ -49,24 +55,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateMarqueeRates() {
-        // Directly call the Frankfurter API without the proxy
-        const url = "https://api.frankfurter.app/latest?from=INR";
+        // Fetch rates using INR as the base currency
+        const url = "https://open.er-api.com/v6/latest/INR";
         
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                // Read rates directly from the response
-                const rates = data.rates;
-                const currenciesToShow = ["USD", "EUR", "GBP", "AUD", "JPY", "CAD"];
-                let text = "LIVE RATES: ";
-                
-                currenciesToShow.forEach(currency => {
-                    if (rates[currency]) {
-                        const value = (1 / rates[currency]).toFixed(2);
-                        text += `1 ${currency} = ${value} INR || `;
-                    }
-                });
-                marquee.textContent = text.slice(0, -4);
+                if (data.result === "success") {
+                    const rates = data.rates;
+                    const currenciesToShow = ["USD", "EUR", "GBP", "AUD", "JPY", "CAD"];
+                    let text = "LIVE RATES: ";
+                    
+                    currenciesToShow.forEach(currency => {
+                        if (rates[currency]) {
+                            // Calculate how many INR equals 1 unit of the target currency
+                            const value = (1 / rates[currency]).toFixed(2);
+                            text += `1 ${currency} = ${value} INR || `;
+                        }
+                    });
+                    marquee.textContent = text.slice(0, -4); // Remove trailing " || "
+                } else {
+                    marquee.textContent = "Failed to fetch live exchange rates.";
+                }
             })
             .catch(() => {
                 marquee.textContent = "Failed to fetch live exchange rates.";
