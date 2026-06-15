@@ -49,26 +49,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    function updateMarqueeRates() {
-        fetch("https://api.frankfurter.app/latest?from=INR")
-            .then(response => response.json())
-            .then(data => {
-                const rates = data.rates;
-                const currenciesToShow = ["USD", "EUR", "GBP", "AUD", "JPY", "CAD"];
-                let text = "LIVE RATES: ";
-                currenciesToShow.forEach(currency => {
-                    if (rates[currency]) {
-                        const value = (1 / rates[currency]).toFixed(2);
-                        text += `1 ${currency} = ${value} INR || `;
-                    }
-                });
-                marquee.textContent = text.slice(0, -4);
-            })
-            .catch(() => {
-                marquee.textContent = "Failed to fetch live exchange rates.";
-            });
-    }
+  function updateMarqueeRates() {
+    const proxyUrl = "https://api.allorigins.win/get?url=" + 
+        encodeURIComponent("https://api.frankfurter.app/latest?from=INR");
     
+    fetch(proxyUrl)
+        .then(response => response.json())
+        .then(data => {
+            const rates = JSON.parse(data.contents).rates;
+            const currenciesToShow = ["USD", "EUR", "GBP", "AUD", "JPY", "CAD"];
+            let text = "LIVE RATES: ";
+            currenciesToShow.forEach(currency => {
+                if (rates[currency]) {
+                    const value = (1 / rates[currency]).toFixed(2);
+                    text += `1 ${currency} = ${value} INR || `;
+                }
+            });
+            marquee.textContent = text.slice(0, -4);
+        })
+        .catch(() => {
+            marquee.textContent = "Failed to fetch live exchange rates.";
+        });
+}
     updateMarqueeRates(); 
 
     // --- Stars Logic ---
