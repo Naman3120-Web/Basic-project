@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertBtn.disabled = true; 
         // --- End Loading Indicator ---
 
-        const url = `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`;
+       const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`)}`;
 
         fetch(url)
             .then((res) => res.json())
