@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
         convertBtn.disabled = true; 
         // --- End Loading Indicator ---
 
-       const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`)}`;
+        // Directly call the Frankfurter API without the proxy
+        const url = `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`;
 
         fetch(url)
             .then((res) => res.json())
@@ -42,35 +43,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultDiv.innerText = "Live conversion failed. Try again.";
             })
             .finally(() => {
-             
                 loader.style.display = "none"; 
-                convertBtn.disabled = false; 
-              
+                convertBtn.disabled = false;  
             });
     });
 
-  function updateMarqueeRates() {
-    const proxyUrl = "https://api.allorigins.win/get?url=" + 
-        encodeURIComponent("https://api.frankfurter.app/latest?from=INR");
-    
-    fetch(proxyUrl)
-        .then(response => response.json())
-        .then(data => {
-            const rates = JSON.parse(data.contents).rates;
-            const currenciesToShow = ["USD", "EUR", "GBP", "AUD", "JPY", "CAD"];
-            let text = "LIVE RATES: ";
-            currenciesToShow.forEach(currency => {
-                if (rates[currency]) {
-                    const value = (1 / rates[currency]).toFixed(2);
-                    text += `1 ${currency} = ${value} INR || `;
-                }
+    function updateMarqueeRates() {
+        // Directly call the Frankfurter API without the proxy
+        const url = "https://api.frankfurter.app/latest?from=INR";
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Read rates directly from the response
+                const rates = data.rates;
+                const currenciesToShow = ["USD", "EUR", "GBP", "AUD", "JPY", "CAD"];
+                let text = "LIVE RATES: ";
+                
+                currenciesToShow.forEach(currency => {
+                    if (rates[currency]) {
+                        const value = (1 / rates[currency]).toFixed(2);
+                        text += `1 ${currency} = ${value} INR || `;
+                    }
+                });
+                marquee.textContent = text.slice(0, -4);
+            })
+            .catch(() => {
+                marquee.textContent = "Failed to fetch live exchange rates.";
             });
-            marquee.textContent = text.slice(0, -4);
-        })
-        .catch(() => {
-            marquee.textContent = "Failed to fetch live exchange rates.";
-        });
-}
+    }
+    
+    // Initialize the marquee on load
     updateMarqueeRates(); 
 
     // --- Stars Logic ---
